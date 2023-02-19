@@ -1,0 +1,82 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "fb34144435be3f0eb18933154e6785de",
+    "entities": [
+      {
+        "tableName": "BeerEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `imgUrl` TEXT, `tagline` TEXT, `abv` REAL NOT NULL, `foodPairings` TEXT NOT NULL, `brewersTips` TEXT, `contributedBy` TEXT, `evaluation` REAL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imgUrl",
+            "columnName": "imgUrl",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tagline",
+            "columnName": "tagline",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "abv",
+            "columnName": "abv",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "foodPairings",
+            "columnName": "foodPairings",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "brewersTips",
+            "columnName": "brewersTips",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contributedBy",
+            "columnName": "contributedBy",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "evaluation",
+            "columnName": "evaluation",
+            "affinity": "REAL",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fb34144435be3f0eb18933154e6785de')"
+    ]
+  }
+}

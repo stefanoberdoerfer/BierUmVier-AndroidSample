@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">BierUmVier</string>
+
+    <string name="beer_list_fragment_label">Entdecke die Biervielfalt</string>
+    <string name="beer_detail_fragment_label">Details</string>
+
+    <string name="explore">Entdecken</string>
+    <string name="evaluate">Bewerten</string>
+    <string name="order">Bestellen</string>
+
+    <string name="beers_list_title">&#127866; Entdecke die Biervielfalt &#127866;</string>
+
+    <string name="label_foodpairings">Passt gut zu:</string>
+    <string name="label_contributor">Eingetragen von:</string>
+    <string name="label_evaluation">Deine Bewertung:</string>
+
+    <string name="network_error">Netzwerkfehler</string>
+    <string name="no_internet">Kein Internet</string>
+
+    <string name="wip">🚧  Work in progress 🚧</string>
+</resources>

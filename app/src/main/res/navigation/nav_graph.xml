@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/BeerListFragment">
+
+    <fragment
+        android:id="@+id/BeerListFragment"
+        android:name="de.stefanoberdoerfer.bierumvier.ui.list.BeerListFragment"
+        android:label="@string/beer_list_fragment_label">
+
+        <action
+            android:id="@+id/action_to_DetailFragment"
+            app:destination="@id/BeerDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/BeerDetailFragment"
+        android:name="de.stefanoberdoerfer.bierumvier.ui.detail.BeerDetailFragment"
+        android:label="@string/beer_detail_fragment_label">
+
+        <action
+            android:id="@+id/action_to_ListFragment"
+            app:destination="@id/BeerListFragment" />
+
+        <argument
+            android:name="beer_id"
+            app:argType="long" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/EvaluatedBeersFragment"
+        android:name="de.stefanoberdoerfer.bierumvier.ui.wip.EvaluatedBeersFragment"/>
+
+    <fragment
+        android:id="@+id/OrderBeersFragment"
+        android:name="de.stefanoberdoerfer.bierumvier.ui.wip.OrderBeersFragment"/>
+
+</navigation>
