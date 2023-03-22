@@ -1,7 +1,7 @@
 package de.stefanoberdoerfer.bierumvier.data.network
 
 import de.stefanoberdoerfer.bierumvier.BuildConfig
-import de.stefanoberdoerfer.bierumvier.data.db.AppDb
+import de.stefanoberdoerfer.bierumvier.data.db.AppDatabase
 import de.stefanoberdoerfer.bierumvier.data.db.model.BeerEntity
 import de.stefanoberdoerfer.bierumvier.data.network.model.NetReqState
 import de.stefanoberdoerfer.bierumvier.data.network.model.NetworkError
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
-object BeerRepository {
+class BeerRepository(private val netApi: PunkApi, private val appDb: AppDatabase) {
 
     fun fetchBeers() = flow {
         emit(NetReqState.Loading)
@@ -21,7 +21,7 @@ object BeerRepository {
             delay(2000)
         }
 
-        val beerDao = AppDb.instance.beerDao()
+        val beerDao = appDb.beerDao()
 
         // Get page by checking beer with the highest id in local db
         // Note:
@@ -35,12 +35,12 @@ object BeerRepository {
             1
         }
 
-        val response = NetApi.client.getBeers(page)
+        val response = netApi.getBeers(page)
 
         if (response.isSuccessful) {
             // persist new beers in db
             val beerEntities = response.body()?.map { BeerEntity.from(it) } ?: listOf()
-            AppDb.instance.beerDao().insert(beerEntities)
+            appDb.beerDao().insert(beerEntities)
             emit(NetReqState.Success)
         } else {
             emit(NetReqState.Error.fromErrorResponse(response))
@@ -50,10 +50,12 @@ object BeerRepository {
         emit(NetReqState.Error(NetworkError.Unknown))
     }.flowOn(Dispatchers.IO)
 
-    fun getBeerById(id: Long) = AppDb.instance.beerDao().getById(id)
+    fun getBeerById(id: Long) = appDb.beerDao().getById(id)
 
-    fun getAllBeers() = AppDb.instance.beerDao().getAllAsFlow()
+    fun getAllBeers() = appDb.beerDao().getAllAsFlow()
 
     suspend fun updateEvaluationFor(id: Long, value: Float) =
-        AppDb.instance.beerDao().updateEvaluation(id, value)
+        appDb.beerDao().updateEvaluation(id, value)
+
+    suspend fun countBeersInDb() = appDb.beerDao().countBeersInDb()
 }
