@@ -15,16 +15,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import de.stefanoberdoerfer.bierumvier.data.db.model.BeerEntity
 import de.stefanoberdoerfer.bierumvier.data.network.model.NetReqState
 import de.stefanoberdoerfer.bierumvier.ui.theme.BierUmVierTheme
 import de.stefanoberdoerfer.bierumvier.ui.theme.Primary
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BeerListFragment : Fragment() {
 
-    private val viewModel: BeerListViewModel by viewModels()
+    private val viewModel: BeerListViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

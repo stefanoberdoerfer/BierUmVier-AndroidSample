@@ -12,24 +12,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.navArgs
 import de.stefanoberdoerfer.bierumvier.data.db.model.BeerEntity
 import de.stefanoberdoerfer.bierumvier.ui.theme.BierUmVierTheme
 import de.stefanoberdoerfer.bierumvier.ui.theme.Primary
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class BeerDetailFragment : Fragment() {
-    private lateinit var viewModel: BeerDetailViewModel
-    private val args: BeerDetailFragmentArgs by navArgs()
+    private val viewModel: BeerDetailViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val viewModelFactory = BeerDetailViewModelFactory.createFactory(args.beerId)
-        viewModel = ViewModelProvider(this, viewModelFactory)[BeerDetailViewModel::class.java]
-
         return ComposeView(requireContext()).apply {
             setContent {
                 BierUmVierTheme {

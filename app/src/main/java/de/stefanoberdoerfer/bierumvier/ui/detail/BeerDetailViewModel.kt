@@ -1,5 +1,6 @@
 package de.stefanoberdoerfer.bierumvier.ui.detail
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.stefanoberdoerfer.bierumvier.data.network.BeerRepository
@@ -7,9 +8,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class BeerDetailViewModel(private val beerId: Long) : ViewModel() {
+class BeerDetailViewModel(private val beerRepo: BeerRepository, handle: SavedStateHandle) :
+    ViewModel() {
 
-    val beer = BeerRepository.getBeerById(beerId).stateIn(
+    private val args = BeerDetailFragmentArgs.fromSavedStateHandle(handle)
+
+    val beer = beerRepo.getBeerById(args.beerId).stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(),
         null
@@ -17,7 +21,7 @@ class BeerDetailViewModel(private val beerId: Long) : ViewModel() {
 
     fun updateEvaluation(value: Float) {
         viewModelScope.launch {
-            BeerRepository.updateEvaluationFor(beerId, value)
+            beerRepo.updateEvaluationFor(args.beerId, value)
         }
     }
 }

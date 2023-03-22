@@ -2,7 +2,6 @@ package de.stefanoberdoerfer.bierumvier.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.stefanoberdoerfer.bierumvier.data.db.AppDb
 import de.stefanoberdoerfer.bierumvier.data.network.BeerRepository
 import de.stefanoberdoerfer.bierumvier.data.network.model.NetReqState
 import de.stefanoberdoerfer.bierumvier.util.Constants
@@ -15,19 +14,19 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicBoolean
 
-class BeerListViewModel : ViewModel() {
+class BeerListViewModel(private val beerRepo: BeerRepository) : ViewModel() {
 
     init {
         viewModelScope.launch {
             // load initial page of beers if table does not contain it already
-            val localBeersCount = AppDb.instance.beerDao().countBeersInDb()
+            val localBeersCount = beerRepo.countBeersInDb()
             if (localBeersCount < Constants.PageSize) {
                 fetchMoreBeers()
             }
         }
     }
 
-    val beers = BeerRepository.getAllBeers().stateIn(
+    val beers = beerRepo.getAllBeers().stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(),
         listOf()
@@ -45,7 +44,7 @@ class BeerListViewModel : ViewModel() {
     fun fetchMoreBeers() {
         if (!currentlyFetching.getAndSet(true)) {
             viewModelScope.launch {
-                BeerRepository.fetchBeers()
+                beerRepo.fetchBeers()
                     .collectLatest {
                         _netRequestState.emit(it)
                     }
