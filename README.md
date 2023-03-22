@@ -19,10 +19,10 @@ written in about 10h
    - good readability
    - platform independent
  - Retrofit + Moshi: Field-tested stack for consuming HTTP-Rest APIs
+ - Koin Dependency Injection: Personal learning challenge
 
 
 ## Possible improvements
- - Dependency Injection for improved testability
  - Material Design 3 dynamic colors and darkmode
 
 
